@@ -1,7 +1,7 @@
 {
   "name": "rpc-ws-blockchain-watcher",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/mod.js",
   "author": "c1r5 <contato.ericjoseph@gmail.com>",
   "license": "MIT",
   "dependencies": {
