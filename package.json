@@ -19,6 +19,6 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "start": "npx ts-node test/test.ts"
+    "test": "npx ts-node test/test.ts"
   }
 }
