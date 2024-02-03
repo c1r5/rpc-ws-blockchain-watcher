@@ -19,6 +19,7 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "start": "npx ts-node src/index.ts"
+    "start": "npx ts-node src/index.ts",
+    "test": "npx ts-node test/test.ts"
   }
 }
