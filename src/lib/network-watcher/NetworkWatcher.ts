@@ -75,13 +75,11 @@ export class NetworkWatcher {
         }
     }
 
-    onMessage(cb: (ws: WebSocket, data: any) => void) {
+    onMessage(cb: (message: any) => void) {
         if (this.ws) {
             const socket = this.ws;
 
-            socket.on('message', (ws: WebSocket, data: any) => {
-                cb(ws, data)
-            })
+            socket.on('message', cb)
         }
     }
 }
