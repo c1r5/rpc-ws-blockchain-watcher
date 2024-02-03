@@ -80,7 +80,7 @@ export class NetworkWatcher {
             const socket = this.ws;
 
             socket.on('message', (ws: WebSocket, data: any) => {
-                cb.apply(ws, data)
+                cb(ws, data)
             })
         }
     }

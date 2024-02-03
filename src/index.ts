@@ -1,1 +1,1 @@
-export * from "./lib/network-wacher/NetworkWatcher"
+export * from "./lib/network-watcher/NetworkWatcher"
