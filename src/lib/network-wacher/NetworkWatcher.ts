@@ -61,13 +61,9 @@ export class NetworkWatcher {
                 socket.on('error', () => {
                     log.error('[-]', `Websocket connection failed for ${target.network_name} - ${url}`)
                 })
-
-                socket.on('message', (data) => {
-                    log.info(`[NETWORK:${target.network_name}]`, data.toString())
-                })
             }
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            throw new Error(error);
         }
     }
 
@@ -76,6 +72,16 @@ export class NetworkWatcher {
             for (let target of this.targets) {
                 this.connect(target)
             }
+        }
+    }
+
+    onMessage(cb: (ws: WebSocket, data: any) => void) {
+        if (this.ws) {
+            const socket = this.ws;
+
+            socket.on('message', (ws: WebSocket, data: any) => {
+                cb.apply(ws, data)
+            })
         }
     }
 }
