@@ -1,4 +1,4 @@
-import { NetworkWatcher, jsonRpcQuery } from "@src/mod";
+import { NetworkWatcher, jsonRpcQuery } from "../src/lib/network-wacher/NetworkWatcher";
 
 const watcher = new NetworkWatcher();
 
