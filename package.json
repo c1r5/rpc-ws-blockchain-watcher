@@ -1,5 +1,5 @@
 {
-  "name": "snipers",
+  "name": "rpc-ws-blockchain-watcher",
   "version": "1.0.0",
   "main": "index.js",
   "author": "c1r5 <contato.ericjoseph@gmail.com>",
@@ -19,7 +19,6 @@
     "typescript": "^5.3.3"
   },
   "scripts": {
-    "start": "npx ts-node src/index.ts",
-    "test": "npx ts-node test/test.ts"
+    "start": "npx ts-node test/test.ts"
   }
 }
