@@ -46,7 +46,26 @@ export type jsonRpcQueryOptions = {
 }
 
 export type Target = {
-    network_name: string
+    targetID: string
     websocketOptions: NetworkWebSocketOptions,
     message: jsonRpcQuery
+}
+
+export type CallbackArgs = {
+    target: Target
+    data: Buffer
+}
+
+export type NodeData = {
+    jsonrpc: "2.0",
+    "id": 0 | 1,
+    result: {
+        subscription_id: string,
+        query: string
+        data: {
+            type: string,
+            value?: any
+        }
+    }
+    events?: {}
 }

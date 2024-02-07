@@ -1,4 +1,4 @@
-import { Target, jsonRpcQueryOptions } from "./types";
+import { Target, jsonRpcQueryOptions, CallbackArgs } from "./types";
 import WebSocket from "ws";
 import log from "npmlog";
 
@@ -23,15 +23,17 @@ export class NetworkWatcher {
     private targets: Target[] = [];
     private ws?: WebSocket;
 
-    constructor() { }
+    constructor(target: Target) {
+        this.targets?.push(target)
+    }
 
-    newTarget(target: Target): this {
+    newTarget(target: Target): NetworkWatcher {
         this.targets?.push(target)
 
         return this
     };
 
-    private connect(target: Target) {
+    private connect(target: Target, cb: (args: CallbackArgs) => void) {
         try {
             let url: string = "";
 
@@ -53,13 +55,20 @@ export class NetworkWatcher {
 
 
                 socket.on('open', () => {
-                    log.info('[!]', `Websocket connection successfully to ${target.network_name} - ${url}`)
+                    log.info('[!]', `Websocket connection successfully to ${target.targetID} - ${url}`)
                     log.info('[!]', `Sending message ${target.message.as_string()}`)
                     socket.send(target.message.as_string() ?? "default_message" + '\n');
                 })
 
                 socket.on('error', () => {
-                    log.error('[-]', `Websocket connection failed for ${target.network_name} - ${url}`)
+                    log.error('[-]', `Websocket connection failed for ${target.targetID} - ${url}`)
+                })
+
+                socket.on('message', (data: Buffer) => {
+                    cb({
+                        target,
+                        data
+                    })
                 })
             }
         } catch (error: any) {
@@ -67,19 +76,12 @@ export class NetworkWatcher {
         }
     }
 
-    watch() {
+    capture(cb: (args: CallbackArgs) => any) {
         if (this.targets) {
             for (let target of this.targets) {
-                this.connect(target)
+                this.connect(target, cb)
             }
         }
     }
 
-    onMessage(cb: (message: any) => void) {
-        if (this.ws) {
-            const socket = this.ws;
-
-            socket.on('message', cb)
-        }
-    }
 }
